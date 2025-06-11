@@ -1,12 +1,11 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
+import { TransactionRoutes } from './routes/transaction.routes';
 
 export class AppRoutes {
   static get routes(): Router {
     const router = Router();
 
-    router.get('/api/transactions', (req: Request, res: Response) => {
-      res.json({ message: 'Testing...' });
-    });
+    router.use('/api/transactions', TransactionRoutes.routes);
 
     return router;
   }
