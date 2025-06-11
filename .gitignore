@@ -1,0 +1,12 @@
+node_modules/
+package-lock.json
+dist/
+
+# environments
+.env
+.env.prod
+
+# docker
+mongo/
+pgadmin/
+postgres/

@@ -1,0 +1,31 @@
+{
+  "name": "pos-terminal",
+  "version": "1.0.0",
+  "description": "Simulación de sistema POS",
+  "main": "src/app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsnd -r tsconfig-paths/register --respawn --clear src/app.ts",
+    "build": "rimraf ./dist && tsc",
+    "start": "node dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santiago12396/node-post-terminal.git"
+  },
+  "keywords": [
+    "POS"
+  ],
+  "author": "Santiago Lorduy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/santiago12396/node-post-terminal/issues"
+  },
+  "homepage": "https://github.com/santiago12396/node-post-terminal#readme",
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
+  }
+}
