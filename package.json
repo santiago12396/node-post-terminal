@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsnd -r tsconfig-paths/register --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "lint": "eslint src --ext .js,.ts",
+    "lint:fix": "eslint src --fix --ext .js,.ts"
   },
   "repository": {
     "type": "git",
@@ -23,9 +25,16 @@
   },
   "homepage": "https://github.com/santiago12396/node-post-terminal#readme",
   "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "globals": "^16.2.0",
+    "prettier": "3.5.3",
     "rimraf": "^6.0.1",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0"
   }
 }
