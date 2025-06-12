@@ -1,3 +1,4 @@
+import { TransactionStatus, TransactionType } from '@/interfaces';
 import mongoose from 'mongoose';
 
 const transactionSchema = new mongoose.Schema(
@@ -23,12 +24,12 @@ const transactionSchema = new mongoose.Schema(
     transactionType: {
       type: String,
       required: [true, 'El tipo de transacción es requerido'],
-      enum: ['SALE', 'REFUND', 'VOID'],
+      enum: Object.values(TransactionType),
     },
     status: {
       type: String,
       required: [true, 'El estado de la transacción es requerido'],
-      enum: ['APPROVED', 'PENDING', 'DECLINED', 'CANCELLED'],
+      enum: Object.values(TransactionStatus),
     },
   },
   {

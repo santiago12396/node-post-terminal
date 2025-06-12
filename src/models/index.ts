@@ -1,1 +1,1 @@
-export * from './task.model';
+export * from './transaction.model';
