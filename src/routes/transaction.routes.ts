@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { TransactionController } from '@/controllers';
+import { schemaValidation } from '@/middlewares';
+import { createTransactionSchema } from '@/schemas';
 
 // TODO: BearerAuth
 export class TransactionRoutes {
@@ -7,7 +9,7 @@ export class TransactionRoutes {
     const router = Router();
 
     router.get('/', TransactionController.findAll);
-    router.post('/', TransactionController.create);
+    router.post('/', schemaValidation(createTransactionSchema), TransactionController.create);
 
     return router;
   }
