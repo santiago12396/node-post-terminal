@@ -1,8 +1,8 @@
 import { z } from 'zod/v4';
 
 const envVars = z.object({
-  PORT: z.string().refine(val => Number.isInteger(Number(val)) && Number(val) > 0, {
-    message: 'PORT debe ser un número válido mayor a 0',
+  PORT: z.coerce.number().int().positive({
+    message: 'PORT debe ser un número entero mayor a 0',
   }),
   NODE_ENV: z.enum(['dev', 'prod']),
   MONGO_USER: z.string().nonempty(),

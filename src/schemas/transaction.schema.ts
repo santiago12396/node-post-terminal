@@ -49,7 +49,7 @@ export const createTransactionSchema = z.object({
             : 'El campo (transactionType) debe ser una cadena de texto',
       })
       .refine(val => Object.values(TransactionType).includes(val as TransactionType), {
-        message: `El campo (transactionType) debe ser uno de: ${Object.values(TransactionType)}`,
+        message: `El campo (transactionType) debe ser uno de: ${Object.values(TransactionType).join(', ')}`,
       }),
 
     status: z
@@ -60,7 +60,7 @@ export const createTransactionSchema = z.object({
             : 'El campo (status) debe ser una cadena de texto',
       })
       .refine(val => Object.values(TransactionStatus).includes(val as TransactionStatus), {
-        message: `El campo (status) debe ser uno de: ${Object.values(TransactionStatus)}`,
+        message: `El campo (status) debe ser uno de: ${Object.values(TransactionStatus).join(', ')}`,
       }),
   }),
 });

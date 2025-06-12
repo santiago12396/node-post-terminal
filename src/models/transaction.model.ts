@@ -1,7 +1,8 @@
-import { TransactionStatus, TransactionType } from '@/interfaces';
-import mongoose from 'mongoose';
+import { Document, model, PaginateModel, Schema } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
+import { ITransaction, TransactionStatus, TransactionType } from '@/interfaces';
 
-const transactionSchema = new mongoose.Schema(
+const transactionSchema = new Schema(
   {
     terminalId: {
       type: String,
@@ -38,4 +39,11 @@ const transactionSchema = new mongoose.Schema(
   }
 );
 
-export const Transaction = mongoose.model('Transaction', transactionSchema);
+transactionSchema.plugin(mongoosePaginate);
+
+interface TransactionDocument extends Document, ITransaction {}
+
+export const Transaction = model<TransactionDocument, PaginateModel<TransactionDocument>>(
+  'Transaction',
+  transactionSchema
+);

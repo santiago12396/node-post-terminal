@@ -10,3 +10,12 @@ export enum TransactionStatus {
   Declined = 'declined',
   Cancelled = 'cancelled',
 }
+
+export interface ITransaction {
+  terminalId: string;
+  amount: number;
+  currency: 'COP';
+  cardMasked: string;
+  transactionType: TransactionType;
+  status: TransactionStatus;
+}
