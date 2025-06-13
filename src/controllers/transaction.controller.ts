@@ -63,7 +63,7 @@ export class TransactionController {
       });
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      res.json(result.docs.map(({ _id, ...rest }) => rest));
+      res.json(result.docs.map(({ id, ...rest }) => rest));
     } catch (error) {
       handleError(error, res);
     }

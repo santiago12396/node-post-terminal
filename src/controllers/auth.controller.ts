@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
+import { PostgresConfig } from '@/database';
 import { BcryptAdapter, JwtAdapter } from '@/adapters';
 import { CustomError, handleError } from '@/errors';
 import { LoginType, SignupType } from '@/schemas';
 import { UserModel } from '@/models';
+import { UserEntity } from '@/entities';
 
 export class AuthController {
   static signup = async (req: Request<unknown, unknown, SignupType>, res: Response) => {
@@ -12,18 +14,25 @@ export class AuthController {
       const existUser = await UserModel.findOne({ email });
       if (existUser) throw CustomError.badRequest('El correo ya existe');
 
-      const user = new UserModel({ name, email, password });
+      const hashedPassword = BcryptAdapter.hash(password);
 
-      user.password = BcryptAdapter.hash(password);
+      const mongoUser = new UserModel({ name, email, password: hashedPassword });
 
-      await user.save();
+      const userRepository = PostgresConfig.getDataSource().getRepository(UserEntity);
+      const postgresUser = userRepository.create({
+        name,
+        email,
+        password: hashedPassword,
+      });
+
+      await Promise.all([mongoUser.save(), userRepository.save(postgresUser)]);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password: rawPassword, ...userEntity } = user.toObject();
+      const { password: rawPassword, ...userModel } = mongoUser.toObject();
 
       res.status(201).json({
         message: 'Usuario creado con éxito',
-        user: userEntity,
+        user: userModel,
       });
     } catch (error) {
       handleError(error, res);

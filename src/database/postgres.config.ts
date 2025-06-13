@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { TransactionEntity } from '@/entities';
+import { TransactionEntity, UserEntity } from '@/entities';
 
 interface PostgresOptions {
   username: string;
@@ -27,7 +27,7 @@ export class PostgresConfig {
         password: options.password,
         database: options.database,
         synchronize: true,
-        entities: [TransactionEntity],
+        entities: [TransactionEntity, UserEntity],
       });
 
       await this.dataSource.initialize();
