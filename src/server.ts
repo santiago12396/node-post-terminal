@@ -1,6 +1,8 @@
 import express, { Router } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import swaggerUI from 'swagger-ui-express';
+import specs from '@/swagger/swagger.config';
 
 interface ServerOptions {
   port?: number;
@@ -25,6 +27,8 @@ export class Server {
     this.app.use(morgan('dev'));
 
     this.app.use(express.json());
+
+    this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
     this.app.use(this.routes);
 

@@ -7,18 +7,18 @@ export const validateToken = async (req: Request, res: Response, next: NextFunct
   const authorization = req.header('Authorization');
 
   try {
-    if (!authorization) throw CustomError.badRequest('Token inválido');
-    if (!authorization.startsWith('Bearer ')) throw CustomError.badRequest('Token inválido');
+    if (!authorization) throw CustomError.unauthorized('Token inválido');
+    if (!authorization.startsWith('Bearer ')) throw CustomError.unauthorized('Token inválido');
 
     const [scheme, token] = authorization.split(' ');
 
-    if (scheme !== 'Bearer' || !token) throw CustomError.badRequest('Token inválido');
+    if (scheme !== 'Bearer' || !token) throw CustomError.unauthorized('Token inválido');
 
     const payload = await JwtAdapter.validateToken<TokenPayload>(token);
-    if (!payload) throw CustomError.badRequest('Token inválido');
+    if (!payload) throw CustomError.unauthorized('Token inválido');
 
     const user = await User.findById(payload.id);
-    if (!user) throw CustomError.badRequest('Token inválido');
+    if (!user) throw CustomError.unauthorized('Token inválido');
 
     next();
   } catch (error) {

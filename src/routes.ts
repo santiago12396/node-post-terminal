@@ -6,8 +6,8 @@ export class AppRoutes {
   static get routes(): Router {
     const router = Router();
 
-    router.use('/api/transactions', TransactionRoutes.routes);
-    router.use('/api/auth', AuthRoutes.routes);
+    router.use('/api/v1/transactions', TransactionRoutes.routes);
+    router.use('/api/v1/auth', AuthRoutes.routes);
 
     return router;
   }

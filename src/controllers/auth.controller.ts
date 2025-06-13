@@ -8,10 +8,10 @@ export class AuthController {
   static signup = async (req: Request<unknown, unknown, SignupType>, res: Response) => {
     const { name, email, password } = req.body;
 
-    const existUser = await User.findOne({ email });
-    if (existUser) throw CustomError.badRequest('El correo ya existe');
-
     try {
+      const existUser = await User.findOne({ email });
+      if (existUser) throw CustomError.badRequest('El correo ya existe');
+
       const user = new User({ name, email, password });
 
       user.password = BcryptAdapter.hash(password);

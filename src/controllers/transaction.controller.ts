@@ -10,7 +10,10 @@ export class TransactionController {
     try {
       const transaction = new Transaction(req.body);
       await transaction.save();
-      res.status(201).json(transaction);
+      res.status(201).json({
+        message: 'Transacción creada con éxito',
+        data: transaction,
+      });
     } catch (error) {
       handleError(error, res);
     }
@@ -48,7 +51,8 @@ export class TransactionController {
         lean: true,
       });
 
-      res.json(result.docs);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      res.json(result.docs.map(({ id, ...rest }) => rest));
     } catch (error) {
       handleError(error, res);
     }

@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { CustomError } from './custom-error';
 
 export const handleError = (error: unknown, res: Response) => {
-  console.log(error);
+  console.error(error);
 
   if (error instanceof CustomError)
     return res.status(error.statusCode).json({ error: error.message });
