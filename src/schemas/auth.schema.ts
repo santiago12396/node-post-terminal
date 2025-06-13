@@ -33,4 +33,9 @@ export const signupSchema = z.object({
   }),
 });
 
+export const loginSchema = z.object({
+  body: signupSchema.shape.body.pick({ email: true, password: true }),
+});
+
 export type SignupType = z.infer<typeof signupSchema>['body'];
+export type LoginType = z.infer<typeof loginSchema>['body'];

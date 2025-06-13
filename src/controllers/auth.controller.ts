@@ -1,8 +1,8 @@
-import bcryptjs from 'bcryptjs';
-import { CustomError } from '@/errors/custom-error';
-import { User } from '@/models';
-import { SignupType } from '@/schemas';
 import { Request, Response } from 'express';
+import { BcryptAdapter, JwtAdapter } from '@/adapters';
+import { CustomError } from '@/errors/custom-error';
+import { LoginType, SignupType } from '@/schemas';
+import { User } from '@/models';
 
 export class AuthController {
   static signup = async (req: Request<unknown, unknown, SignupType>, res: Response) => {
@@ -14,8 +14,7 @@ export class AuthController {
     try {
       const user = new User({ name, email, password });
 
-      const salt = bcryptjs.genSaltSync();
-      user.password = bcryptjs.hashSync(password, salt);
+      user.password = BcryptAdapter.hash(password);
 
       await user.save();
 
@@ -24,7 +23,7 @@ export class AuthController {
 
       res.status(201).json({
         message: 'Usuario creado con éxito',
-        data: userEntity,
+        user: userEntity,
       });
     } catch (error) {
       console.error(error);
@@ -32,9 +31,25 @@ export class AuthController {
     }
   };
 
-  static login = async (req: Request<unknown, unknown, unknown>, res: Response) => {
+  static login = async (req: Request<unknown, unknown, LoginType>, res: Response) => {
     try {
-      res.json({ message: 'holaaa' });
+      const { email, password } = req.body;
+
+      const user = await User.findOne({ email }).select('+password');
+      if (!user) throw CustomError.badRequest('El correo o contraseña no es valido');
+
+      const validPassword = BcryptAdapter.compare(password, user.password!);
+      if (!validPassword) throw CustomError.badRequest('El correo o contraseña no es valido');
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password: rawPassword, ...userEntity } = user.toObject();
+
+      const token = await JwtAdapter.generateToken({ id: userEntity._id.toString() });
+
+      res.json({
+        token,
+        user: userEntity,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
