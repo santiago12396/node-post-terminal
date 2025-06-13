@@ -53,6 +53,28 @@ Para ejecutar las pruebas de linter y asegurar la calidad del código, puedes us
    npm run lint:fix
    ```
 
+## Pruebas Unitarias y de Integración 🧪
+
+Para ejecutar las pruebas del proyecto, puedes usar los siguientes comandos:
+
+Ejecutar todas las pruebas:
+
+```bash
+npm run test
+```
+
+Ejecutar pruebas en modo watch (útil durante el desarrollo):
+
+```bash
+npm run test:watch
+```
+
+Ejecutar pruebas con cobertura:
+
+```bash
+npm run test:coverage
+```
+
 ## Despliegue 🚀
 
 Para desplegar la aplicación en producción, sigue estos pasos:

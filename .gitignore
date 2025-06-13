@@ -9,3 +9,6 @@ dist/
 # docker
 mongo/
 postgres/
+
+# testing
+coverage/
