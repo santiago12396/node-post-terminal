@@ -9,6 +9,7 @@ const envVars = z.object({
   MONGO_PASSWORD: z.string().nonempty(),
   MONGO_DB: z.string().nonempty(),
   MONGO_URI: z.url({ protocol: /^mongodb$/ }),
+  JWT_SEED: z.string().nonempty(),
 });
 
 envVars.parse(process.env);
