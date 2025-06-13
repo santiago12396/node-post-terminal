@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BcryptAdapter, JwtAdapter } from '@/adapters';
-import { CustomError } from '@/errors/custom-error';
+import { CustomError, handleError } from '@/errors';
 import { LoginType, SignupType } from '@/schemas';
 import { User } from '@/models';
 
@@ -26,8 +26,7 @@ export class AuthController {
         user: userEntity,
       });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      handleError(error, res);
     }
   };
 
@@ -51,8 +50,7 @@ export class AuthController {
         user: userEntity,
       });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      handleError(error, res);
     }
   };
 }

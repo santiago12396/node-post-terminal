@@ -3,6 +3,7 @@ import { FilterQuery } from 'mongoose';
 import { CreateTransactionType, FilterType, Order } from '@/schemas';
 import { Transaction } from '@/models';
 import { ITransaction } from '@/interfaces';
+import { handleError } from '@/errors';
 
 export class TransactionController {
   static create = async (req: Request<unknown, unknown, CreateTransactionType>, res: Response) => {
@@ -11,8 +12,7 @@ export class TransactionController {
       await transaction.save();
       res.status(201).json(transaction);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      handleError(error, res);
     }
   };
 
@@ -50,8 +50,7 @@ export class TransactionController {
 
       res.json(result.docs);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      handleError(error, res);
     }
   };
 }
