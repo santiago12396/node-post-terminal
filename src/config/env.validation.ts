@@ -1,15 +1,15 @@
 import { z } from 'zod/v4';
 
 const envVars = z.object({
+  NODE_ENV: z.enum(['dev', 'prod']),
   PORT: z.coerce.number().int().positive({
     message: 'PORT debe ser un número entero mayor a 0',
   }),
-  NODE_ENV: z.enum(['dev', 'prod']),
-  MONGO_USER: z.string().nonempty(),
-  MONGO_PASSWORD: z.string().nonempty(),
-  MONGO_DB: z.string().nonempty(),
-  MONGO_URI: z.url({ protocol: /^mongodb$/ }),
+  DATASOURCE_DB: z.string().nonempty(),
+  DATASOURCE_USER: z.string().nonempty(),
+  DATASOURCE_PASSWORD: z.string().nonempty(),
   JWT_SEED: z.string().nonempty(),
+  MONGO_URI: z.url({ protocol: /^mongodb$/ }),
 });
 
 envVars.parse(process.env);

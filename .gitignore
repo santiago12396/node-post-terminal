@@ -8,5 +8,4 @@ dist/
 
 # docker
 mongo/
-pgadmin/
 postgres/
