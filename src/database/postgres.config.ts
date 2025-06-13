@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Transaction } from '@/entities';
+import { TransactionEntity } from '@/entities';
 
 interface PostgresOptions {
   username: string;
@@ -9,6 +9,13 @@ interface PostgresOptions {
 
 export class PostgresConfig {
   private static dataSource: DataSource;
+
+  static get AppDataSource(): DataSource {
+    if (!this.dataSource) {
+      throw new Error('PostgreSQL connection not initialized');
+    }
+    return this.dataSource;
+  }
 
   static async connect(options: PostgresOptions) {
     try {
@@ -20,7 +27,7 @@ export class PostgresConfig {
         password: options.password,
         database: options.database,
         synchronize: true,
-        entities: [Transaction],
+        entities: [TransactionEntity],
       });
 
       await this.dataSource.initialize();
@@ -29,5 +36,12 @@ export class PostgresConfig {
       console.error('Postgres connection error');
       throw error;
     }
+  }
+
+  static getDataSource(): DataSource {
+    if (!this.dataSource) {
+      throw new Error('Postgres connection not initialized');
+    }
+    return this.dataSource;
   }
 }

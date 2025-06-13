@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { JwtAdapter, TokenPayload } from '@/adapters';
-import { User } from '@/models';
+import { UserModel } from '@/models';
 import { CustomError, handleError } from '@/errors';
 
 export const validateToken = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +17,7 @@ export const validateToken = async (req: Request, res: Response, next: NextFunct
     const payload = await JwtAdapter.validateToken<TokenPayload>(token);
     if (!payload) throw CustomError.unauthorized('Token inválido');
 
-    const user = await User.findById(payload.id);
+    const user = await UserModel.findById(payload.id);
     if (!user) throw CustomError.unauthorized('Token inválido');
 
     next();

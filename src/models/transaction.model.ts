@@ -43,7 +43,7 @@ transactionSchema.plugin(mongoosePaginate);
 
 interface TransactionDocument extends Document, ITransaction {}
 
-export const Transaction = model<TransactionDocument, PaginateModel<TransactionDocument>>(
+export const TransactionModel = model<TransactionDocument, PaginateModel<TransactionDocument>>(
   'Transaction',
   transactionSchema
 );
